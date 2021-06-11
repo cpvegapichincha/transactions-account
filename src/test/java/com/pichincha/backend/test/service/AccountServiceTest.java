@@ -14,6 +14,7 @@ import com.pichincha.backend.test.model.Account;
 import com.pichincha.backend.test.repository.AccountRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ class AccountServiceTest {
 
   @Test
   void shouldReturnNullForNotExistingAccount() {
-    AccountDto accountDto = accountService.getAccount(123L);
+    AccountDto accountDto = accountService.getAccount(UUID.randomUUID());
     assertNull(accountDto);
   }
 

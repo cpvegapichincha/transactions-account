@@ -1,5 +1,6 @@
 package com.pichincha.backend.test.dto;
 
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class NewTransactionDto {
 
-  private Long accountId;
+  private UUID accountId;
 
   private String type;
 

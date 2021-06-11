@@ -15,6 +15,7 @@ import com.pichincha.backend.test.dto.TransactionDto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
@@ -31,7 +32,7 @@ class TransactionControllerTest extends AbstractControllerTest {
         creationDate, 100));
 
     // when
-    when(accountService.getTransactionsForAccount(1L)).thenReturn(transactions);
+    when(accountService.getTransactionsForAccount(UUID.randomUUID())).thenReturn(transactions);
 
     // then
     mockMvc.perform(get("/accounts/1/transactions").accept(MediaType.APPLICATION_JSON))

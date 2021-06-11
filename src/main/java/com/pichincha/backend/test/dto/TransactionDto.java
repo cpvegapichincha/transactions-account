@@ -2,20 +2,26 @@ package com.pichincha.backend.test.dto;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Builder
+@Setter
+@NoArgsConstructor
 public class TransactionDto {
 
-  private final Long id;
+  private Long id;
 
-  private final String comment;
+  private String comment;
 
-  private final String type;
+  private String type;
 
-  private final LocalDateTime creationDate;
+  private LocalDateTime creationDate;
 
-  private final int amount;
+  private double amount;
 
 }

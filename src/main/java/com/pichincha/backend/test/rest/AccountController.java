@@ -3,6 +3,7 @@ package com.pichincha.backend.test.rest;
 import com.pichincha.backend.test.dto.AccountDto;
 import com.pichincha.backend.test.dto.AccountResponseDto;
 import com.pichincha.backend.test.service.AccountService;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class AccountController {
 
   @GetMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public AccountDto getAccount(@PathVariable Long id) {
+  public AccountDto getAccount(@PathVariable UUID id) {
     return aService.getAccount(id);
   }
 
@@ -38,7 +39,7 @@ public class AccountController {
   //todo: should send an async message to any queue you prefer, this queue must only log the tracing information of the account that is being searched
   //todo: use "mapResponse" of "serviceMapper" in service layer
   //todo: create unit and integration tests
-  @GetMapping("/{id}")
+  @GetMapping("/{id}/transaction-filter/")
   public AccountResponseDto findAccountWithTransactionFilter() {
     return null;
   }
