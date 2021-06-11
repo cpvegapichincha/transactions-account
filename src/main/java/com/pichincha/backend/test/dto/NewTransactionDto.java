@@ -7,9 +7,11 @@ import lombok.Setter;
 @Setter
 public class NewTransactionDto {
 
-	private Long accountId;
+  private Long accountId;
 
-	private String type;
+  private String type;
 
-	private String comment;
+  private String comment;
+
+  private int amount;
 }
