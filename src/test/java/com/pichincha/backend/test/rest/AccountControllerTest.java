@@ -1,16 +1,17 @@
 package com.pichincha.backend.test.rest;
 
-import com.pichincha.backend.test.dto.AccountDto;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
-import org.junit.jupiter.api.Test;
-
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.pichincha.backend.test.dto.AccountDto;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
 
 class AccountControllerTest extends AbstractControllerTest {
 

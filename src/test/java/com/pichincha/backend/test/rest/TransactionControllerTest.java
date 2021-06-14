@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -13,8 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pichincha.backend.test.dto.NewTransactionDto;
 import com.pichincha.backend.test.dto.TransactionDto;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -26,13 +26,18 @@ class TransactionControllerTest extends AbstractControllerTest {
   void shouldReturnFoundTransactions() throws Exception {
 
     // given
-    List<TransactionDto> transactions = new ArrayList<>();
+    Map<String, List<TransactionDto>> transactions = new HashMap<>();
+//    List<TransactionDto> transactions = new ArrayList<>();
     LocalDateTime creationDate = LocalDateTime.of(2018, 5, 20, 20, 51, 16);
-    transactions.add(new TransactionDto(2L, "July payment", "Credit card payment",
-        creationDate, 100));
+    transactions.put("CreditCardPayment", List.of(TransactionDto.builder()
+        .id(UUID.randomUUID())
+        .comment("July payment")
+        .creationDate(creationDate)
+        .amount(100)
+        .build()));
 
     // when
-    when(accountService.getTransactionsForAccount(UUID.randomUUID())).thenReturn(transactions);
+    when(transactionService.getTransactionsForAccount(UUID.randomUUID())).thenReturn(transactions);
 
     // then
     mockMvc.perform(get("/accounts/1/transactions").accept(MediaType.APPLICATION_JSON))
@@ -42,7 +47,6 @@ class TransactionControllerTest extends AbstractControllerTest {
         .andExpect(jsonPath("$[0].comment", is("July payment")))
         .andExpect(jsonPath("$[0].type", is("Credit card payment")))
         .andExpect(jsonPath("$[0].creationDate", is(creationDate.toString())));
-
   }
 
   @Test
@@ -53,7 +57,8 @@ class TransactionControllerTest extends AbstractControllerTest {
     NewTransactionDto newTransaction = createTransaction("Test comment", "Credit card payment");
 
     // when
-    when(accountService.addTransaction(newTransaction)).thenReturn(1L);
+    when(transactionService.addTransaction(newTransaction, UUID.randomUUID().toString()))
+        .thenReturn(UUID.randomUUID());
 
     // then
     mockMvc.perform(post("/accounts/1/transactions")

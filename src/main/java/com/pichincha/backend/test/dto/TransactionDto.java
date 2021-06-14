@@ -1,6 +1,7 @@
 package com.pichincha.backend.test.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransactionDto {
 
-  private Long id;
+  private UUID id;
 
   private String comment;
 

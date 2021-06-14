@@ -21,7 +21,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "account")
+@Table(name = "account", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,13 +34,10 @@ public class Account {
   @Id
   @GeneratedValue(strategy = AUTO)
   UUID id;
-
   String number;
-
   @Column(length = 70)
   String type;
-
-  @Column(name = "creation_date")
+  @Column(name = "creation_date", insertable = false, updatable = false)
   LocalDateTime creationDate;
 
   @OneToMany(mappedBy = "account", cascade = ALL)

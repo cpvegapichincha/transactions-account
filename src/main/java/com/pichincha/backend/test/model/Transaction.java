@@ -21,7 +21,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transaction", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,8 +34,9 @@ public class Transaction {
   @GeneratedValue(strategy = AUTO)
   UUID id;
   double amount;
-  int type;
-  @Column(name = "creation_date")
+  String type;
+  String comment;
+  @Column(name = "creation_date",insertable = false,updatable = false)
   LocalDateTime creationDate;
   @ManyToOne(cascade = ALL)
   @JoinColumn(name = "account_id")
