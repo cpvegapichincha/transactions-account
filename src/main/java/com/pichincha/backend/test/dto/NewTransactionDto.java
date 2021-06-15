@@ -1,5 +1,7 @@
 package com.pichincha.backend.test.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +9,12 @@ import lombok.Setter;
 @Setter
 public class NewTransactionDto {
 
-	private Long accountId;
+  @NotEmpty
+  private String type;
 
-	private String type;
+  @NotEmpty
+  private String comment;
 
-	private String comment;
+  @Min(1)
+  private double amount;
 }

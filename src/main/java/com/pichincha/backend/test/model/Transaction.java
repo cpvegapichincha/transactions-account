@@ -5,13 +5,13 @@ import static javax.persistence.GenerationType.AUTO;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,25 +21,24 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "account", schema = "public")
+@Table(name = "transaction", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
 @FieldDefaults(level = PRIVATE)
-//todo: map relation of account with transaction based on migration
-public class Account {
+public class Transaction {
 
   @Id
   @GeneratedValue(strategy = AUTO)
   UUID id;
-  String number;
-  @Column(length = 70)
+  double amount;
   String type;
-  @Column(name = "creation_date", insertable = false, updatable = false)
+  String comment;
+  @Column(name = "creation_date",insertable = false,updatable = false)
   LocalDateTime creationDate;
-
-  @OneToMany(mappedBy = "account", cascade = ALL)
-  List<Transaction> transactions;
+  @ManyToOne(cascade = ALL)
+  @JoinColumn(name = "account_id")
+  Account account;
 }

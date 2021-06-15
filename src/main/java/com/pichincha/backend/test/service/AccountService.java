@@ -1,48 +1,49 @@
 package com.pichincha.backend.test.service;
 
 
+import static com.pichincha.backend.test.Constants.ACCOUNT_NOT_FOUND;
+import static lombok.AccessLevel.PRIVATE;
+
 import com.pichincha.backend.test.dto.AccountDto;
-import com.pichincha.backend.test.dto.NewTransactionDto;
-import com.pichincha.backend.test.dto.TransactionDto;
+import com.pichincha.backend.test.exception.SearchedAccountNotFoundException;
+import com.pichincha.backend.test.iservices.IAccountService;
+import com.pichincha.backend.test.mapper.ServiceMapper;
+import com.pichincha.backend.test.model.Account;
 import com.pichincha.backend.test.repository.AccountRepository;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import java.util.UUID;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Repository
-public class AccountService {
+//todo: modify class to inject dependencies not via constructors
+@Service
+@FieldDefaults(level = PRIVATE)
+public class AccountService implements IAccountService {
 
-	private final AccountRepository accountRepository;
+  @Autowired
+  AccountRepository accountRepository;
+  @Autowired
+  ServiceMapper serviceMapper;
 
-	public AccountService(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
-	}
 
-	public AccountDto getAccount(Long id) {
-		return accountRepository.findById(id)
-			.map(account -> new AccountDto(account.getNumber(), account.getType(), account.getCreationDate()))
-			.orElse(null);
-	}
+  //todo: use single responsibility principle (mappers in different layer) return account with its transactions and handle with API standards when account not found (404 not found)
+  @Override
+  public AccountDto getAccount(UUID id) {
+    return accountRepository.findById(id)
+        .map(account -> serviceMapper.toAccountDto(account))
+        .orElseThrow(() -> new SearchedAccountNotFoundException(ACCOUNT_NOT_FOUND));
+  }
 
-	/**
-	 * Returns a list of all transactions for a account with passed id.
-	 *
-	 * @param accountId id of the account
-	 * @return list of transactions sorted by creation date descending - most recent first
-	 */
-	public List<TransactionDto> getTransactionsForAccount(Long accountId) {
-		throw new UnsupportedOperationException();
-	}
+  //helper for single responsability with transactions
+  @Override
+  public Account getDatabaseAccount(UUID id) {
+    return accountRepository.findById(id).orElse(Account.builder().build());
+  }
 
-	/**
-	 * Creates a new transaction
-	 *
-	 * @param newTransactionDto data of new transaction
-	 * @return id of the created transaction
-	 * @throws IllegalArgumentException if there is no account for passed newTransactionDto.accountId
-	 */
-	public Long addTransaction(NewTransactionDto newTransactionDto) {
-		throw new UnsupportedOperationException();
-	}
-
+  //helper for getting accountIds
+  @Override
+  public List<Account> getAllAccounts() {
+    return accountRepository.findAll();
+  }
 }
