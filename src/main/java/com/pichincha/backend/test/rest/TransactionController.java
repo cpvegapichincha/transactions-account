@@ -43,7 +43,7 @@ public class TransactionController {
     return iTransactionService.getTransactionsForAccount(UUID.fromString(accountId));
   }
 
-  //todo:Create controller with filtered transactions
+
   @GetMapping("/{accountId}/transactions/filtered")
   public AccountResponseDto findAccountWithTransactionFilter(@RequestParam("min") double minimum,
       @RequestParam("max") double maximum, @PathVariable("accountId") String accountId) {

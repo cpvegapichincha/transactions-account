@@ -31,6 +31,7 @@ public class AccountController {
     return iAccountService.getAccount(UUID.fromString(id));
   }
 
+  //helper not in test
   @GetMapping()
   public List<Account> getAllAccounts(){
     return iAccountService.getAllAccounts();

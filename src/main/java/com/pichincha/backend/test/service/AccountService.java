@@ -27,7 +27,7 @@ public class AccountService implements IAccountService {
   ServiceMapper serviceMapper;
 
 
-  //todo: use single responsibility principle (mappers in different layer) return account with its transactions and handle with API standards and best practices when account not found OK
+  //todo: use single responsibility principle (mappers in different layer) return account with its transactions and handle with API standards when account not found (404 not found)
   @Override
   public AccountDto getAccount(UUID id) {
     return accountRepository.findById(id)
@@ -35,11 +35,13 @@ public class AccountService implements IAccountService {
         .orElseThrow(() -> new SearchedAccountNotFoundException(ACCOUNT_NOT_FOUND));
   }
 
+  //helper for single responsability with transactions
   @Override
   public Account getDatabaseAccount(UUID id) {
     return accountRepository.findById(id).orElse(Account.builder().build());
   }
 
+  //helper for getting accountIds
   @Override
   public List<Account> getAllAccounts() {
     return accountRepository.findAll();

@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-//todo: if you know lombok, use annotations
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
