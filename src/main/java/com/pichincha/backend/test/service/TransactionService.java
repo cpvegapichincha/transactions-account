@@ -30,7 +30,7 @@ public class TransactionService implements ITransactionService {
   //todo: should amounts type be changed? explain why
   //todo: use custom exceptions to throw errors and not exceptions thrown by java; and handle some of them through try and catch and some of them globally (ExceptionHandler)
   //todo: log different kind of levels depending of the information needed (errors, informative, and tracing) the header pass by sleuth should be present in all logs
-  //todo: should send an async message to any queue you prefer, this queue must only log the tracing information of the account that is being searched
+  //todo: extra point should send an async message to any queue you prefer, this queue must only log the tracing information of the account that is being searched
   //todo: use "mapResponse" of "serviceMapper" in service layer
   @Override
   public AccountResponseDto getFilteredTransactions(UUID accountId, double minimum,
