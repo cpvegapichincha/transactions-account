@@ -23,6 +23,6 @@ public class TransactionDto {
 
   private LocalDateTime creationDate;
 
-  private double amount;
+  private int amount;
 
 }
